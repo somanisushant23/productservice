@@ -6,4 +6,6 @@ import scala.concurrent.Future
 
 trait ProductService {
   def getAllProducts(): Future[JsValue]
+
+  def getProductDetails(productId: Long): Future[JsValue]
 }

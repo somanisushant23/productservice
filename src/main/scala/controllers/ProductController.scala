@@ -7,24 +7,20 @@ import services.ProductService
 trait ProductController extends ProductService {
 
   val productsRoutePath = "products"
-  val hostName          = "localhost"
-  val hostPort          = 8080
   val productsRoute = {
-    (get & path(productsRoutePath)) {
-      complete(getAllProducts())
-    } ~ {
-      (post & path(productsRoutePath)) {
-        //TODO return product with matching product id
-        print("Rejection from Scala!!")
-        throw new Exception("Bad exceptions")
-        reject
+    path(productsRoutePath) {
+      get {
+        complete(getAllProducts())
       }
-    }
+    } ~
+      path(productsRoutePath / LongNumber) { id =>
+        complete(getProductDetails(id.toLong))
+      }
   }
 
   val usersRoute = {
     (get & path("users")) {
-      complete(getAllProducts())
+      reject
     } ~ {
       (post & path(productsRoutePath)) {
         //TODO return product with matching product id

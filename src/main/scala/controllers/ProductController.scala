@@ -16,8 +16,7 @@ trait ProductController extends ProductService {
         complete(getAllProducts())
       } ~ post {
         entity(as[Product]) { product =>
-          println(s"Product received is $product")
-          complete(StatusCodes.OK)
+          complete(createProduct(product))
         }
       }
     } ~

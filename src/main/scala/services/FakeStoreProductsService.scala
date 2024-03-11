@@ -1,10 +1,11 @@
 package services
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.client.RequestBuilding.Get
+import akka.http.scaladsl.client.RequestBuilding.{Get, Post}
 import akka.http.scaladsl.model.{HttpEntity, StatusCodes}
 import akka.stream.ActorMaterializer
 import model.CustomExceptions.ProductNotFoundException
+import model.ProductServiceEntities
 import spray.json._
 
 import scala.concurrent.Future
@@ -38,6 +39,18 @@ trait FakeStoreProductsService extends ProductService {
             Future.successful(entity.data.utf8String.parseJson)
           }
         }
+      } else {
+        Future.failed(new RuntimeException(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String))
+      }
+    }
+  }
+
+  override def createProduct(product: ProductServiceEntities.Product): Future[JsValue] = {
+    val req = Post(s"$fakeStoreBaseUrl$fakeStoreProducts")
+    val respFuture = Http().singleRequest(req)
+    respFuture.flatMap { response =>
+      if (response.status == StatusCodes.OK) {
+        Future.successful(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String.parseJson)
       } else {
         Future.failed(new RuntimeException(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String))
       }

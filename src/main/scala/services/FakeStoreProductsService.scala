@@ -1,7 +1,7 @@
 package services
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.client.RequestBuilding.{Get, Post}
+import akka.http.scaladsl.client.RequestBuilding.{Delete, Get, Patch, Post}
 import akka.http.scaladsl.model.{HttpEntity, StatusCodes}
 import akka.stream.ActorMaterializer
 import model.CustomExceptions.ProductNotFoundException
@@ -47,6 +47,30 @@ trait FakeStoreProductsService extends ProductService {
 
   override def createProduct(product: ProductServiceEntities.Product): Future[JsValue] = {
     val req = Post(s"$fakeStoreBaseUrl$fakeStoreProducts")
+    val respFuture = Http().singleRequest(req)
+    respFuture.flatMap { response =>
+      if (response.status == StatusCodes.OK) {
+        Future.successful(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String.parseJson)
+      } else {
+        Future.failed(new RuntimeException(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String))
+      }
+    }
+  }
+
+  override def deleteProduct(productId: Long): Future[JsValue] = {
+    val req = Delete(s"$fakeStoreBaseUrl$fakeStoreProducts/$productId")
+    val respFuture = Http().singleRequest(req)
+    respFuture.flatMap { response =>
+      if (response.status == StatusCodes.OK) {
+        Future.successful(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String.parseJson)
+      } else {
+        Future.failed(new RuntimeException(response.entity.asInstanceOf[HttpEntity.Strict].data.utf8String))
+      }
+    }
+  }
+
+  override def updateProduct(productId: Long): Future[JsValue] = {
+    val req = Patch(s"$fakeStoreBaseUrl$fakeStoreProducts/$productId")
     val respFuture = Http().singleRequest(req)
     respFuture.flatMap { response =>
       if (response.status == StatusCodes.OK) {

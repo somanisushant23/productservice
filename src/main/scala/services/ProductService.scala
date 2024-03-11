@@ -10,4 +10,8 @@ trait ProductService {
   def getProductDetails(productId: Long): Future[JsValue]
 
   def createProduct(product: Product): Future[JsValue]
+
+  def updateProduct(productId: Long): Future[JsValue]
+
+  def deleteProduct(productId: Long): Future[JsValue]
 }

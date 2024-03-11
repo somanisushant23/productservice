@@ -8,6 +8,7 @@ import services.FakeStoreProductsService
 import spray.json.DefaultJsonProtocol
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import model.CustomExceptions.ProductNotFoundException
+import model.ProductServiceEntities.ExceptionMessage
 
 import java.io.IOException
 
@@ -28,7 +29,7 @@ trait ProductServiceRoute extends RejectionHandler with ProductServiceDirectives
 }
 
 trait GlobalExceptionHandlerTrait extends Directives with DefaultJsonProtocol {
-    implicit val jsonFormat = jsonFormat1(ExceptionMessage)
+      implicit val jsonFormat = jsonFormat1(ExceptionMessage)
     implicit val globalExHandler: ExceptionHandler = ExceptionHandler {
       case ex: IOException =>
         complete(StatusCodes.BadRequest, ExceptionMessage("Incorrect request from client"))
@@ -41,7 +42,7 @@ trait GlobalExceptionHandlerTrait extends Directives with DefaultJsonProtocol {
 
     }
 
-  case class ExceptionMessage(errorDetails: String)
+
 }
 
 trait ProductServiceDirectives extends GlobalExceptionHandlerTrait {

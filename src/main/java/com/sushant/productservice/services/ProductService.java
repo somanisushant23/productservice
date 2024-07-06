@@ -1,8 +1,8 @@
 package com.sushant.productservice.services;
 
 import com.sushant.productservice.dtos.GenericProductDto;
+import com.sushant.productservice.exceptions.NotFoundException;
 import com.sushant.productservice.models.Product;
-import com.sushant.productservice.thirdpartyclients.fakestore.FakeStoreProductDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +11,14 @@ public interface ProductService {
 
     List<GenericProductDto> getAllProducts();
 
-    Optional<GenericProductDto> getProductById(Long id);
+    GenericProductDto getProductById(Long id) throws NotFoundException;
 
-    GenericProductDto createProduct(GenericProductDto genericProductDto);
+    //Use builder design pattern
+    Product addNewProduct(Product product);
+
+    Product updateProduct(Product product);
+
+    boolean deleteProduct(Long id);
 
     Product replaceProduct(Long id, Product product);
 }

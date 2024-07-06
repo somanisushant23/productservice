@@ -48,7 +48,7 @@ class ProductsControllerTest {
         fakeStoreProductDtoList.add(product1);
         fakeStoreProductDtoList.add(product2);
 
-        when(productService.getAllProducts()).thenReturn(fakeStoreProductDtoList);
+        //when(productService.getAllProducts()).thenReturn(fakeStoreProductDtoList);
         mockMvc.perform(get("/products")).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
         verify(productService, times(1)).getAllProducts();

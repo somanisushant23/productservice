@@ -31,12 +31,31 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Optional<GenericProductDto> getProductById(Long id) {
+    public GenericProductDto getProductById(Long id) {
         return Optional.ofNullable((fakeStoreProductServiceClient.getProductById(id)))
-                .map(source -> new GenericProductDto(source.getId(), source.getTitle(), source.getDescription(), source.getImage(), source.getCategory(), source.getPrice()));
+                .map(source -> new GenericProductDto(source.getId(), source.getTitle(), source.getDescription(), source.getImage(), source.getCategory(), source.getPrice())).get();
     }
 
     @Override
+    public Product addNewProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product updateProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteProduct(Long id) {
+        return false;
+    }
+
+
+    public Product addNewProduct(String title, String description, String imageUrl, double price, String categoryName) {
+        return null;
+    }
+
     public GenericProductDto createProduct(GenericProductDto genericProductDto) {
         //FakeStoreProductDto fakeStoreProductDto = fakeStoreProductServiceClient.createProduct(genericProductDto);
         return Stream.of(fakeStoreProductServiceClient.createProduct(genericProductDto))

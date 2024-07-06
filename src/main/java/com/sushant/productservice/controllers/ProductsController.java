@@ -2,6 +2,7 @@ package com.sushant.productservice.controllers;
 
 import com.sushant.productservice.dtos.GenericProductDto;
 import com.sushant.productservice.exceptions.NotFoundException;
+import com.sushant.productservice.models.Product;
 import com.sushant.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -25,22 +26,20 @@ public class ProductsController {
 
     @GetMapping
     public ResponseEntity<List<GenericProductDto>> getAllProducts() {
-        List<GenericProductDto> fakeStoreProductDtoList = productService.getAllProducts();
+        List<GenericProductDto> productsDtoList = productService.getAllProducts();
         return new ResponseEntity<>(
-                fakeStoreProductDtoList,
+                productsDtoList,
                 HttpStatus.OK
         );
     }
 
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id) throws Exception {
-        Optional<GenericProductDto> genericProductDto = productService.getProductById(id);
-        if(genericProductDto.isPresent()) return genericProductDto.get();
-        else throw new NotFoundException("Product not found!!");
+    public GenericProductDto getProductById(@PathVariable("id") Long id) throws NotFoundException{
+        return productService.getProductById(id);
     }
 
     @PostMapping
-    public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto) {
-        return productService.createProduct(genericProductDto);
+    public Product createProduct(@RequestBody Product product) {
+        return productService.addNewProduct(product);
     }
 }

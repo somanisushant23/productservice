@@ -1,7 +1,6 @@
 package com.sushant.productservice.services;
 
 import com.sushant.productservice.dtos.GenericProductDto;
-import com.sushant.productservice.thirdpartyclients.fakestore.FakeStoreProductDto;
 import com.sushant.productservice.thirdpartyclients.fakestore.FakeStoreProductServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

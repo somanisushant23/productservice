@@ -1,6 +1,7 @@
 package com.sushant.productservice.services;
 
 import com.sushant.productservice.dtos.GenericProductDto;
+import com.sushant.productservice.models.Product;
 import com.sushant.productservice.thirdpartyclients.fakestore.FakeStoreProductServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,10 @@ public class FakeStoreProductService implements ProductService {
         return Stream.of(fakeStoreProductServiceClient.createProduct(genericProductDto))
                 .map(source -> new GenericProductDto(source.getId(), source.getTitle(), source.getDescription(),
                         source.getImage(), source.getCategory(), source.getPrice())).findFirst().get();
+    }
+
+    @Override
+    public Product replaceProduct(Long id, Product product) {
+        return null;
     }
 }

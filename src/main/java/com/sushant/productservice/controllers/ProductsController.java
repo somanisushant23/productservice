@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -41,5 +40,15 @@ public class ProductsController {
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
         return productService.addNewProduct(product);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteProduct(Long id) {
+        if(productService.deleteProduct(id)) {
+            return new ResponseEntity<>("Product deleted successfully",HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Something went wrong!!",HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
 }

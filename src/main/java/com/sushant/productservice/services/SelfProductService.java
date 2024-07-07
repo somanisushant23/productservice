@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("selfProductService")
 public class SelfProductService implements ProductService {
@@ -22,7 +23,9 @@ public class SelfProductService implements ProductService {
     }
     @Override
     public List<GenericProductDto> getAllProducts() {
-        return null;
+        return productRepository.findByIdNotNullOrderByIdAsc().stream()
+                .map(prod -> new GenericProductDto(prod.getId(), prod.getTitle(), prod.getDescription(), prod.getImageUrl(), prod.getCategory().getName(), prod.getPrice()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -43,12 +46,14 @@ public class SelfProductService implements ProductService {
 
     @Override
     public Product updateProduct(Product product) {
-        return null;
+        return productRepository.updateIsDeletedAndTitleAndDescriptionAndImageUrlAndPriceById(product.isDeleted(), product.getTitle(),
+                product.getDescription(), product.getImageUrl(), product.getPrice(), product.getId());
     }
 
     @Override
     public boolean deleteProduct(Long id) {
-        return false;
+        productRepository.deleteById(id);
+        return true;
     }
 
 

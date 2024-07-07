@@ -1,6 +1,5 @@
 package com.sushant.productservice.controllers;
 
-import com.sushant.productservice.services.ProductService;
 import com.sushant.productservice.thirdpartyclients.fakestore.FakeStoreProductDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class ProductsControllerTest {

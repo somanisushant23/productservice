@@ -19,7 +19,6 @@ class ProductserviceApplicationTests {
 	@Test
 	void testQueries() {
 		productRepository.findByTitleContaining("iPhone");
-
 	}
 
 }

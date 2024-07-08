@@ -49,6 +49,10 @@ public class ProductsController {
         } else {
             return new ResponseEntity<>("Something went wrong!!",HttpStatus.NOT_ACCEPTABLE);
         }
+    }
 
+    @PatchMapping
+    public Product updateProduct(Product product) {
+        return productService.updateProduct(product);
     }
 }

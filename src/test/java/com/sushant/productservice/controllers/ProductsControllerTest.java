@@ -1,5 +1,6 @@
 package com.sushant.productservice.controllers;
 
+import com.sushant.productservice.services.ProductService;
 import com.sushant.productservice.thirdpartyclients.fakestore.FakeStoreProductDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

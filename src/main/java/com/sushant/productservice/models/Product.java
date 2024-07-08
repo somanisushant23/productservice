@@ -1,8 +1,6 @@
 package com.sushant.productservice.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +18,8 @@ public class Product extends BaseModel {
      m  <- 1
     -----------
      m  : 1 */
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})//THis cascade type will create a new Product and category if category doesn't exist
+    @JoinColumn(name = "category")
     private Category category;
 
 }

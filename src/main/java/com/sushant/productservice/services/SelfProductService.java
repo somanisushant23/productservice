@@ -2,6 +2,7 @@ package com.sushant.productservice.services;
 
 import com.sushant.productservice.dtos.GenericProductDto;
 import com.sushant.productservice.exceptions.NotFoundException;
+import com.sushant.productservice.models.Category;
 import com.sushant.productservice.models.Product;
 import com.sushant.productservice.repositories.CategoryRepository;
 import com.sushant.productservice.repositories.ProductRepository;
@@ -41,6 +42,13 @@ public class SelfProductService implements ProductService {
     @Override
     public Product addNewProduct(Product product) {
         //Add createdDate and updateDate here
+        Category category = categoryRepository.findByName(product.getCategory().getName())
+                .orElseGet(() -> {
+                    Category newCategory = new Category();
+                    newCategory.setName(product.getCategory().getName());
+                    return newCategory;
+                });
+        product.setCategory(category);
         return productRepository.save(product);
     }
 

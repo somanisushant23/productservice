@@ -67,4 +67,9 @@ public class FakeStoreProductService implements ProductService {
     public Product replaceProduct(Long id, Product product) {
         return null;
     }
+
+    @Override
+    public void postToKafka() {
+
+    }
 }

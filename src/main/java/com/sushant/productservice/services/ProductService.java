@@ -21,4 +21,6 @@ public interface ProductService {
     boolean deleteProduct(Long id);
 
     Product replaceProduct(Long id, Product product);
+
+    void postToKafka();
 }

@@ -20,16 +20,19 @@ public class ProductsController {
 
     private AuthCommons authCommons;
 
-    public ProductsController(@Qualifier("selfProductService") ProductService productService, AuthCommons authCommons,@RequestHeader("Authorization") String token) {
+    public ProductsController(@Qualifier("selfProductService") ProductService productService, AuthCommons authCommons) {
         //qualifier determines which service, if multiple implements ProductService interface, should
         //be used as primary service. @Primary annotation can also be used on service but that is NOT flawless!!
-        authCommons.validateToken(token);
+
         this.productService = productService;
         this.authCommons = authCommons;
     }
 
     @GetMapping
-    public ResponseEntity<List<GenericProductDto>> getAllProducts() {
+    public ResponseEntity<List<GenericProductDto>> getAllProducts(@RequestHeader("Authorization") String token) {
+        if(!authCommons.validateToken(token)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         List<GenericProductDto> productsDtoList = productService.getAllProducts();
         return new ResponseEntity<>(
                 productsDtoList,
